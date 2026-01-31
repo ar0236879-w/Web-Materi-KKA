@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buku Mata Pelajaran KKA - Koding, AI & Web</title>
+    <style>
+        /* --- RESET & VARIABLES --- */
+        :root {
+            --primary: #2563eb;       /* Royal Blue */
+            --primary-dark: #1e40af;
+            --secondary: #0f172a;     /* Dark Slate */
+            --accent: #0ea5e9;        /* Sky Blue */
+            --text-main: #334155;     /* Slate 700 */
+            --text-light: #64748b;    /* Slate 500 */
+            --bg-body: #f8fafc;       /* Slate 50 */
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+            --font-sans: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-mono: 'Consolas', 'Monaco', 'Courier New', monospace;
+            --sidebar-width: 280px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3, h4 {
+            color: var(--secondary);
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 0.5rem; letter-spacing: -0.02em; }
+        h2 { font-size: 2rem; margin-top: 3rem; margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--border); }
+        h3 { font-size: 1.25rem; margin-top: 1.5rem; margin-bottom: 0.75rem; color: var(--primary-dark); }
+        h4 { font-size: 1.1rem; margin-top: 1.25rem; margin-bottom: 0.5rem; font-weight: 600; }
+        
+        p { margin-bottom: 1.25rem; text-align: justify; }
+        ul, ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        li { margin-bottom: 0.5rem; }
+        
+        strong { color: var(--primary-dark); font-weight: 600; }
+
+        /* --- HEADER & HERO --- */
+        .header {
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header h1 { color: white; }
+        .header p.subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-top: 1rem;
+        }
+
+        /* Decoration circles */
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* --- LAYOUT GRID --- */
+        .container {
+            display: grid;
+            grid-template-columns: var(--sidebar-width) 1fr;
+            max-width: 1400px;
+            margin: -3rem auto 3rem; /* Overlap header */
+            gap: 2rem;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 5;
+        }
+
+        /* --- SIDEBAR NAVIGATION --- */
+        .sidebar {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            height: calc(100vh - 8rem);
+            position: sticky;
+            top: 4rem;
+            overflow-y: auto;
+            border: 1px solid var(--border);
+        }
+
+        .sidebar h3 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            margin-top: 0;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-item { margin-bottom: 0.25rem; }
+        
+        .nav-link {
+            display: block;
+            text-decoration: none;
+            color: var(--text-main);
+            padding: 0.4rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.8rem; /* Sedikit lebih kecil untuk menu panjang */
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background-color: #eff6ff;
+            color: var(--primary);
+        }
+
+        .nav-link.active {
+            background-color: #eff6ff;
+            color: var(--primary);
+            border-left-color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* --- MAIN CONTENT --- */
+        .content {
+            min-width: 0; /* Prevents overflow in grid */
+        }
+
+        .chapter-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border);
+            scroll-margin-top: 2rem;
+        }
+
+        .chapter-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .chapter-number {
+            background: var(--primary);
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        /* --- CODE BLOCKS --- */
+        pre {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            position: relative;
+            border: 1px solid #334155;
+        }
+
+        code {
+            font-family: var(--font-mono);
+        }
+        
+        .inline-code {
+            background: #e2e8f0;
+            color: var(--secondary);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            font-size: 0.75rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* --- QUIZ STYLES --- */
+        .quiz-section {
+            background-color: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+        }
+        .quiz-section h4 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .quiz-type {
+            margin-bottom: 1.5rem;
+        }
+        .quiz-type strong {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+        }
+
+        /* --- AUTHOR PROFILE CARD --- */
+        .author-card {
+            background: linear-gradient(to right, #ffffff, #f8fafc);
+            border: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .author-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary-dark);
+            color: white;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: bold;
+            border: 4px solid #e0e7ff;
+        }
+
+        .social-link {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); /* Instagram Gradient */
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(220, 39, 67, 0.3);
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(220, 39, 67, 0.4);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 3rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .footer-content h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-content a {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer-content p {
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        /* --- MOBILE TOGGLE --- */
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none; /* Hidden by default on mobile */
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 85%;
+                height: 100vh;
+                z-index: 99;
+                border-radius: 0;
+                animation: slideIn 0.3s ease-out;
+            }
+
+            .sidebar.open {
+                display: block;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .chapter-card {
+                padding: 1.5rem;
+            }
+
+            h1 { font-size: 1.75rem; }
+            h2 { font-size: 1.5rem; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Highlight for specific sections */
+        .highlight-box {
+            background-color: #f0f9ff;
+            border-left: 4px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER SECTION -->
+    <header class="header">
+        <div class="header-content">
+            <h1>BUKU MATA PELAJARAN KKA</h1>
+            <p class="subtitle">Koding, Kecerdasan Artifisial, dan Dasar Website: Panduan Lengkap & Rasional</p>
+        </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <div class="container">
+        
+        <!-- SIDEBAR NAVIGATION -->
+        <aside class="sidebar" id="sidebar">
+            <h3>Daftar Isi</h3>
+            <ul class="nav-list">
+                <li class="nav-item"><a href="#pendahuluan" class="nav-link">Pendahuluan</a></li>
+                <li class="nav-item"><a href="#bab1" class="nav-link">Bab 1: Pengantar Koding & AI</a></li>
+                <li class="nav-item"><a href="#bab2" class="nav-link">Bab 2: Berpikir Komputasional</a></li>
+                <li class="nav-item"><a href="#bab3" class="nav-link">Bab 3: Algoritma & Flowchart</a></li>
+                <li class="nav-item"><a href="#bab4" class="nav-link">Bab 4: Dasar Pemrograman</a></li>
+                <li class="nav-item"><a href="#bab5" class="nav-link">Bab 5: Logika & Percabangan</a></li>
+                <li class="nav-item"><a href="#bab6" class="nav-link">Bab 6: Perulangan</a></li>
+                <li class="nav-item"><a href="#bab7" class="nav-link">Bab 7: Pengantar AI</a></li>
+                <li class="nav-item"><a href="#bab8" class="nav-link">Bab 8: Data & ML</a></li>
+                <li class="nav-item"><a href="#bab9" class="nav-link">Bab 9: Etika AI</a></li>
+                <li class="nav-item"><a href="#bab10" class="nav-link">Bab 10: Proyek Akhir 1</a></li>
+                <li class="nav-item"><a href="#bab11" class="nav-link">Bab 11: Cara Berpikir Programmer</a></li>
+                <li class="nav-item"><a href="#bab12" class="nav-link">Bab 12: Struktur Data</a></li>
+                <li class="nav-item"><a href="#bab13" class="nav-link">Bab 13: AI Mendalam</a></li>
+                <li class="nav-item"><a href="#bab14" class="nav-link">Bab 14: Data, Bias & Kesalahan</a></li>
+                <li class="nav-item"><a href="#bab15" class="nav-link">Bab 15: Masa Depan</a></li>
+                <li class="nav-item"><a href="#bab16" class="nav-link">Bab 16: Praktik Python</a></li>
+                <li class="nav-item"><a href="#bab17" class="nav-link">Bab 17: Logika Python</a></li>
+                <li class="nav-item"><a href="#bab18" class="nav-link">Bab 18: Struktur Data Praktik</a></li>
+                <li class="nav-item"><a href="#bab19" class="nav-link">Bab 19: AI Praktis</a></li>
+                <li class="nav-item"><a href="#bab20" class="nav-link">Bab 20: Proyek Akhir 2</a></li>
+                <li class="nav-item"><a href="#bab21" class="nav-link">Bab 21: Dasar Website</a></li>
+                <li class="nav-item"><a href="#bab22" class="nav-link">Bab 22: HTML</a></li>
+                <li class="nav-item"><a href="#bab23" class="nav-link">Bab 23: CSS</a></li>
+                <li class="nav-item"><a href="#bab24" class="nav-link">Bab 24: JavaScript</a></li>
+                <li class="nav-item"><a href="#bab25" class="nav-link">Bab 25: Kritik Website</a></li>
+            </ul>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <main class="content">
+            
+            <!-- PENDAHULUAN -->
+            <section id="pendahuluan" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">Intro</div>
+                    <h2>Pendahuluan</h2>
+                </div>
+                <p>Mata pelajaran <strong>Koding dan Kecerdasan Artifisial (KKA)</strong> dirancang untuk membekali peserta didik dengan kemampuan berpikir komputasional, keterampilan pemrograman dasar, serta pemahaman rasional dan kritis tentang kecerdasan artifisial (AI). Buku ini disusun sebagai <strong>buku ajar lengkap</strong> yang dapat digunakan secara mandiri maupun dalam pembelajaran di kelas.</p>
+                <p>Tujuan utama buku ini bukan sekadar membuat siswa bisa menulis kode, tetapi <strong>memahami logika di balik teknologi</strong>, mampu menganalisis masalah, dan menyadari dampak AI terhadap kehidupan, etika, serta masa depan manusia.</p>
+            </section>
+
+            <!-- BAB 1 -->
+            <section id="bab1" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">1</div>
+                    <h2>BAB 1 – PENGANTAR KODING DAN KECERDASAN ARTIFISIAL</h2>
+                </div>
+                <h3>1.1 Pengertian Koding</h3>
+                <p>Koding adalah proses menuliskan instruksi secara sistematis menggunakan bahasa tertentu agar komputer dapat menjalankan perintah sesuai keinginan manusia. Komputer tidak berpikir seperti manusia; ia hanya mengeksekusi instruksi secara logis, berurutan, dan tanpa asumsi. Oleh karena itu, koding menuntut ketelitian, konsistensi, dan kejelasan logika.</p>
+
+                <h3>1.2 Pengertian Kecerdasan Artifisial (AI)</h3>
+                <p>Kecerdasan Artifisial adalah cabang ilmu komputer yang mempelajari cara membuat sistem atau mesin yang mampu meniru kemampuan kognitif manusia. AI bekerja berdasarkan data, algoritma, dan model matematika.</p>
+
+                <h3>1.3 Hubungan Koding dan AI</h3>
+                <p>AI tidak mungkin ada tanpa koding. Koding adalah fondasi dari semua sistem AI.</p>
+
+                <h3>1.4 Tujuan Pembelajaran KKA</h3>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 1</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Yang dimaksud dengan koding adalah …</li>
+                            <li>Mengapa komputer tidak dapat berpikir seperti manusia?</li>
+                            <li>Komponen utama dalam AI adalah …</li>
+                            <li>Pernyataan yang benar tentang AI adalah …</li>
+                            <li>Tujuan utama pembelajaran KKA adalah …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Jelaskan perbedaan cara berpikir manusia dan komputer.</li>
+                            <li>Mengapa AI tidak dapat berdiri tanpa koding?</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 2 -->
+            <section id="bab2" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">2</div>
+                    <h2>BAB 2 – BERPIKIR KOMPUTASIONAL</h2>
+                </div>
+                <h3>2.1 Pengertian Berpikir Komputasional</h3>
+                <p>Berpikir komputasional adalah pendekatan penyelesaian masalah secara sistematis dan logis.</p>
+
+                <h3>2.2 Empat Pilar Berpikir Komputasional</h3>
+                <ul>
+                    <li><strong>Dekomposisi:</strong> Memecah masalah besar.</li>
+                    <li><strong>Abstraksi:</strong> Fokus pada hal penting.</li>
+                    <li><strong>Pengenalan Pola:</strong> Mencari kesamaan.</li>
+                    <li><strong>Algoritma:</strong> Langkah-langkah logis.</li>
+                </ul>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 2</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Yang dimaksud dekomposisi adalah …</li>
+                            <li>Abstraksi bertujuan untuk …</li>
+                            <li>Pengenalan pola membantu dalam hal …</li>
+                            <li>Algoritma harus bersifat …</li>
+                            <li>Berpikir komputasional melatih kemampuan …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Berikan contoh penerapan dekomposisi dalam kehidupan sehari-hari.</li>
+                            <li>Mengapa abstraksi penting dalam pemecahan masalah?</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 3 -->
+            <section id="bab3" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">3</div>
+                    <h2>BAB 3 – ALGORITMA DAN FLOWCHART</h2>
+                </div>
+                <h3>3.1 Pengertian Algoritma dan Flowchart</h3>
+                <p>Algoritma adalah langkah logis, flowchart adalah representasi visualnya.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 3</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Algoritma yang baik harus …</li>
+                            <li>Flowchart digunakan untuk …</li>
+                            <li>Simbol decision berfungsi untuk …</li>
+                            <li>Input/output pada flowchart berarti …</li>
+                            <li>Algoritma tanpa akhir disebut …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Jelaskan hubungan antara algoritma dan flowchart.</li>
+                            <li>Mengapa algoritma tidak boleh ambigu?</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 4 -->
+            <section id="bab4" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">4</div>
+                    <h2>BAB 4 – DASAR-DASAR PEMROGRAMAN</h2>
+                </div>
+                <h3>4.1 Bahasa Pemrograman dan Struktur Program</h3>
+                <p>Bahasa pemrograman digunakan untuk menyampaikan logika ke komputer. Struktur dasar: Input – Proses – Output.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 4</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Fungsi utama bahasa pemrograman adalah …</li>
+                            <li>Struktur dasar program terdiri dari …</li>
+                            <li>Variabel digunakan untuk …</li>
+                            <li>Tipe data string digunakan untuk …</li>
+                            <li>Operator logika digunakan untuk …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Jelaskan konsep input–proses–output.</li>
+                            <li>Mengapa tipe data penting dalam pemrograman?</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 5 -->
+            <section id="bab5" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">5</div>
+                    <h2>BAB 5 – LOGIKA DAN PERCABANGAN</h2>
+                </div>
+                <h3>5.1 Logika Boolean dan Percabangan</h3>
+                <p>Logika boolean menjadi dasar pengambilan keputusan dalam program.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 5</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Nilai dalam logika boolean adalah …</li>
+                            <li>Percabangan digunakan ketika …</li>
+                            <li>Pernyataan if dijalankan jika kondisi …</li>
+                            <li>Kesalahan logika terjadi ketika …</li>
+                            <li>Boolean false berarti …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Jelaskan fungsi percabangan dalam program.</li>
+                            <li>Berikan contoh kesalahan logika sederhana.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 6 -->
+            <section id="bab6" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">6</div>
+                    <h2>BAB 6 – PERULANGAN (LOOPING)</h2>
+                </div>
+                <h3>6.1 Konsep Perulangan</h3>
+                <p>Perulangan digunakan untuk mengeksekusi perintah secara berulang.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 6</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Perulangan for digunakan ketika …</li>
+                            <li>Perulangan while berhenti jika …</li>
+                            <li>Infinite loop terjadi ketika …</li>
+                            <li>Perulangan membuat program menjadi …</li>
+                            <li>Kondisi berhenti berfungsi untuk …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Jelaskan perbedaan for dan while.</li>
+                            <li>Mengapa infinite loop berbahaya?</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 7 -->
+            <section id="bab7" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">7</div>
+                    <h2>BAB 7 – PENGENALAN KECERDASAN ARTIFISIAL</h2>
+                </div>
+                <h3>7.1 Konsep Dasar AI</h3>
+                <p>AI adalah sistem yang meniru kecerdasan manusia secara terbatas.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 7</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>AI lemah disebut juga …</li>
+                            <li>AGI bersifat …</li>
+                            <li>AI bekerja berdasarkan …</li>
+                            <li>Contoh AI di kehidupan sehari-hari adalah …</li>
+                            <li>AI tidak memiliki …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Jelaskan perbedaan AI lemah dan AI umum.</li>
+                            <li>Mengapa AGI masih bersifat teoritis?</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 8 -->
+            <section id="bab8" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">8</div>
+                    <h2>BAB 8 – DATA DAN PEMBELAJARAN MESIN</h2>
+                </div>
+                <h3>8.1 Data dan Machine Learning</h3>
+                <p>Data adalah bahan bakar utama AI.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 8</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Data berfungsi sebagai …</li>
+                            <li>Machine learning memungkinkan sistem untuk …</li>
+                            <li>Tahap awal ML adalah …</li>
+                            <li>Evaluasi bertujuan untuk …</li>
+                            <li>Model dilatih menggunakan …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Mengapa kualitas data sangat penting dalam AI?</li>
+                            <li>Jelaskan tahapan machine learning.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 9 -->
+            <section id="bab9" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">9</div>
+                    <h2>BAB 9 – ETIKA DAN DAMPAK AI</h2>
+                </div>
+                <h3>9.1 Etika Teknologi</h3>
+                <p>Etika menjadi pengendali penggunaan teknologi.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 9</h4>
+                    <div class="quiz-type">
+                        <strong>Pilihan Ganda</strong>
+                        <ol>
+                            <li>Bias dalam AI berasal dari …</li>
+                            <li>Pelanggaran privasi terjadi ketika …</li>
+                            <li>Etika diperlukan karena …</li>
+                            <li>Dampak negatif AI salah satunya …</li>
+                            <li>Sikap pelajar yang benar adalah …</li>
+                        </ol>
+                    </div>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Jelaskan pentingnya etika dalam pengembangan AI.</li>
+                            <li>Berikan contoh dampak negatif AI.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 10 -->
+            <section id="bab10" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">10</div>
+                    <h2>BAB 10 – PROYEK AKHIR KKA</h2>
+                </div>
+                <h3>10.1 Proyek Integratif</h3>
+                <p>Proyek akhir menguji pemahaman logika dan praktik.</p>
+
+                <div class="quiz-section">
+                    <h4>Soal Evaluasi Bab 10</h4>
+                    <div class="quiz-type">
+                        <strong>Esai</strong>
+                        <ol>
+                            <li>Mengapa proyek akhir penting dalam pembelajaran KKA?</li>
+                            <li>Jelaskan kriteria proyek yang baik.</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- BAB 11 -->
+            <section id="bab11" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">11</div>
+                    <h2>BAB 11 – KODING SECARA MENDALAM: CARA BERPIKIR SEORANG PROGRAMMER</h2>
+                </div>
+                <h3>11.1 Koding Bukan Mengetik Kode</h3>
+                <p>Kesalahan paling umum dalam pembelajaran koding adalah mengira bahwa koding berarti mengetik sintaks. Itu keliru. Mengetik hanyalah tahap akhir. Inti koding adalah <strong>menyusun logika yang tidak ambigu</strong>. Programmer yang baik menghabiskan lebih banyak waktu berpikir dibandingkan menulis kode.</p>
+                <p>Setiap baris kode adalah keputusan logis. Jika keputusan itu salah, program tetap berjalan tetapi menghasilkan keluaran yang keliru. Inilah mengapa debugging adalah bagian penting dari koding.</p>
+
+                <h3>11.2 Problem Solving dalam Koding</h3>
+                <p>Setiap program selalu berangkat dari masalah nyata. Tahapan rasionalnya:</p>
+                <ol>
+                    <li>Memahami masalah secara utuh</li>
+                    <li>Menentukan input dan output</li>
+                    <li>Menyusun algoritma</li>
+                    <li>Baru menuliskan kode</li>
+                </ol>
+                <p>Melompati tahapan ini adalah kebiasaan buruk yang membuat siswa tergantung pada contoh, bukan pemahaman.</p>
+
+                <h3>11.3 Debugging dan Error</h3>
+                <p>Error terbagi menjadi:</p>
+                <ul>
+                    <li><strong>Syntax Error:</strong> kesalahan penulisan</li>
+                    <li><strong>Runtime Error:</strong> kesalahan saat program berjalan</li>
+                    <li><strong>Logical Error:</strong> hasil salah tetapi tidak ada pesan error</li>
+                </ul>
+                <p>Kesalahan logika adalah yang paling berbahaya karena sering tidak disadari.</p>
+            </section>
+
+            <!-- BAB 12 -->
+            <section id="bab12" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">12</div>
+                    <h2>BAB 12 – STRUKTUR DATA DASAR</h2>
+                </div>
+                <h3>12.1 Mengapa Struktur Data Penting</h3>
+                <p>Struktur data adalah cara mengatur data agar efisien dan logis. Program tanpa struktur data yang tepat akan lambat dan sulit dikembangkan.</p>
+
+                <h3>12.2 Jenis Struktur Data Dasar</h3>
+                <ul>
+                    <li><strong>Array/List:</strong> menyimpan banyak data sejenis</li>
+                    <li><strong>Dictionary/Map:</strong> pasangan kunci dan nilai</li>
+                    <li><strong>Set:</strong> data unik tanpa duplikasi</li>
+                </ul>
+                <p>Pemilihan struktur data yang salah adalah kesalahan berpikir, bukan kesalahan teknis.</p>
+
+                <h3>12.3 Hubungan Struktur Data dan AI</h3>
+                <p>AI modern sangat bergantung pada pengelolaan data dalam jumlah besar. Tanpa struktur data, AI tidak mungkin bekerja.</p>
+            </section>
+
+            <!-- BAB 13 -->
+            <section id="bab13" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">13</div>
+                    <h2>BAB 13 – KECERDASAN ARTIFISIAL SECARA MENDALAM</h2>
+                </div>
+                <h3>13.1 AI sebagai Sistem Statistik</h3>
+                <p>AI bukan berpikir seperti manusia. Ia menghitung probabilitas berdasarkan data. Setiap prediksi adalah hasil perhitungan matematis.</p>
+                <p>Jika hasil AI salah, ada tiga kemungkinan:</p>
+                <ol>
+                    <li>Data buruk</li>
+                    <li>Model salah</li>
+                    <li>Tujuan dirumuskan keliru</li>
+                </ol>
+                <p>Tidak ada unsur perasaan atau intuisi dalam AI.</p>
+
+                <h3>13.2 Algoritma dalam AI</h3>
+                <p>Contoh algoritma dasar AI:</p>
+                <ul>
+                    <li>K-Nearest Neighbor</li>
+                    <li>Decision Tree</li>
+                    <li>Linear Regression</li>
+                </ul>
+                <p>Semua algoritma ini berbasis logika dan matematika, bukan keajaiban.</p>
+
+                <h3>13.3 Perbedaan AI, Machine Learning, dan Deep Learning</h3>
+                <ul>
+                    <li><strong>AI:</strong> payung besar</li>
+                    <li><strong>Machine Learning:</strong> AI yang belajar dari data</li>
+                    <li><strong>Deep Learning:</strong> ML dengan jaringan saraf berlapis</li>
+                </ul>
+                <p>Banyak orang mencampuradukkan istilah ini tanpa pemahaman.</p>
+            </section>
+
+            <!-- BAB 14 -->
+            <section id="bab14" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">14</div>
+                    <h2>BAB 14 – DATA, BIAS, DAN KESALAHAN BERPIKIR DALAM AI</h2>
+                </div>
+                <h3>14.1 Data Tidak Pernah Netral</h3>
+                <p>Data selalu membawa bias dari manusia yang mengumpulkannya. AI hanya memperbesar bias tersebut.</p>
+
+                <h3>14.2 Contoh Bias AI</h3>
+                <ul>
+                    <li>Diskriminasi</li>
+                    <li>Prediksi keliru</li>
+                    <li>Ketidakadilan algoritmik</li>
+                </ul>
+                <p>Jika siswa percaya AI selalu objektif, itu tanda kegagalan berpikir kritis.</p>
+
+                <h3>14.3 Tanggung Jawab Pengembang</h3>
+                <p>Pengembang AI bertanggung jawab penuh atas dampak sistem yang dibuatnya.</p>
+            </section>
+
+            <!-- BAB 15 -->
+            <section id="bab15" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">15</div>
+                    <h2>BAB 15 – MASA DEPAN KODING DAN AI</h2>
+                </div>
+                <h3>15.1 Apakah AI Akan Menggantikan Manusia</h3>
+                <p>AI menggantikan tugas, bukan manusia. Yang tergantikan adalah manusia yang tidak memiliki logika, keterampilan berpikir, dan kemampuan beradaptasi.</p>
+
+                <h3>15.2 Keterampilan Esensial Lulusan SMA–SMK</h3>
+                <ul>
+                    <li>Berpikir algoritmik</li>
+                    <li>Kemampuan membaca dan mengevaluasi kode</li>
+                    <li>Literasi data</li>
+                    <li>Etika teknologi</li>
+                </ul>
+
+                <h3>15.3 Posisi Manusia dalam Ekosistem AI</h3>
+                <p>Manusia adalah perancang tujuan, AI hanyalah alat. Ketika manusia menyerahkan penilaian moral pada mesin, di situlah kegagalan pendidikan terjadi.</p>
+            </section>
+
+            <!-- BAB 16 -->
+            <section id="bab16" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">16</div>
+                    <h2>BAB 16 – PRAKTIK KODING DASAR DENGAN PYTHON</h2>
+                </div>
+                <h3>16.1 Alasan Menggunakan Python</h3>
+                <p>Python dipilih karena sintaksnya mendekati bahasa manusia, sehingga siswa dapat fokus pada logika, bukan menghafal aturan bahasa. Python juga digunakan secara luas dalam pengembangan web, analisis data, dan kecerdasan artifisial. Ini berarti keterampilan yang dipelajari relevan dengan dunia nyata, bukan simulasi akademik kosong.</p>
+                <p>Python bersifat interpreted, artinya kode dijalankan baris demi baris. Konsekuensinya jelas: setiap kesalahan logika langsung berdampak pada hasil. Ini sangat baik untuk melatih ketelitian berpikir siswa.</p>
+
+                <h3>16.2 Struktur Program Python</h3>
+                <p>Setiap program Python memiliki alur yang konsisten: menerima input, memproses data, dan menghasilkan output. Jika salah satu bagian ini tidak jelas, program akan gagal secara fungsional.</p>
+                <p>Contoh konsep (bukan untuk dihafal, tapi dipahami):</p>
+<pre><code>nama = input("Masukkan nama: ")
+print("Halo", nama)</code><button class="copy-btn">Salin</button></pre>
+                <p>Kode di atas menunjukkan bahwa komputer tidak memahami konteks sosial. Semua harus dinyatakan eksplisit.</p>
+
+                <h3>16.3 Variabel dan Tipe Data dalam Python</h3>
+                <p>Variabel adalah identitas bagi data. Tanpa variabel, data tidak bisa dikelola. Python bersifat dynamic typing, tetapi itu bukan alasan untuk berpikir sembarangan.</p>
+                <p>Contoh:</p>
+<pre><code>umur = 17      # int
+berat = 55.5   # float
+nama = "Ani"  # str
+lulus = True   # bool</code><button class="copy-btn">Salin</button></pre>
+                <p>Kesalahan umum siswa adalah mencampur tipe data tanpa memahami konsekuensinya, misalnya menjumlahkan teks dengan angka.</p>
+            </section>
+
+            <!-- BAB 17 -->
+            <section id="bab17" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">17</div>
+                    <h2>BAB 17 – LOGIKA, KONDISI, DAN PERULANGAN (PRAKTIK)</h2>
+                </div>
+                <h3>17.1 Percabangan if–elif–else</h3>
+                <p>Percabangan digunakan ketika program harus mengambil keputusan. Komputer tidak menebak; ia hanya membandingkan kondisi.</p>
+                <p>Contoh:</p>
+<pre><code>nilai = 80
+if nilai >= 75:
+    print("Lulus")
+else:
+    print("Tidak lulus")</code><button class="copy-btn">Salin</button></pre>
+                <p>Jika kondisi salah dirumuskan, hasilnya pasti salah walaupun kodenya berjalan.</p>
+
+                <h3>17.2 Perulangan for dan while</h3>
+                <p>Perulangan digunakan saat suatu proses dilakukan berkali-kali. Tanpa perulangan, kode akan berulang dan tidak efisien.</p>
+                <p>Contoh for:</p>
+<pre><code>for i in range(5):
+    print(i)</code><button class="copy-btn">Salin</button></pre>
+                <p>Contoh while:</p>
+<pre><code>i = 0
+while i < 5:
+    print(i)
+    i += 1</code><button class="copy-btn">Salin</button></pre>
+                <p><strong>Kesalahan paling fatal:</strong> Lupa kondisi berhenti.</p>
+
+                <h3>17.3 Studi Kasus</h3>
+                <p>Studi kasus digunakan untuk melatih siswa menerjemahkan masalah nyata ke dalam logika program, bukan menyalin kode.</p>
+            </section>
+
+            <!-- BAB 18 -->
+            <section id="bab18" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">18</div>
+                    <h2>BAB 18 – STRUKTUR DATA DALAM PRAKTIK</h2>
+                </div>
+                <h3>18.1 List dan Dictionary</h3>
+                <p>List digunakan untuk data berurutan, dictionary untuk data berpasangan.</p>
+                <p>Contoh list:</p>
+<pre><code>nilai = [80, 75, 90]</code><button class="copy-btn">Salin</button></pre>
+                <p>Contoh dictionary:</p>
+<pre><code>siswa = {"nama": "Ani", "nilai": 85}</code><button class="copy-btn">Salin</button></pre>
+                <p>Memilih struktur data yang salah akan mempersulit pengembangan program.</p>
+
+                <h3>18.2 Kesalahan Umum Siswa</h3>
+                <p>Kesalahan struktur data menunjukkan siswa belum memahami masalah yang diselesaikan, bukan sekadar salah teknis.</p>
+            </section>
+
+            <!-- BAB 19 -->
+            <section id="bab19" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">19</div>
+                    <h2>BAB 19 – PENGANTAR AI PRAKTIS</h2>
+                </div>
+                <h3>19.1 AI Tanpa Ilusi</h3>
+                <p>AI bekerja berdasarkan data dan aturan matematis. Pada tingkat SMA–SMK, fokusnya adalah memahami alur, bukan kompleksitas.</p>
+
+                <h3>19.2 Contoh Implementasi Sederhana</h3>
+                <p>Contoh logika prediksi sederhana (tanpa pustaka AI kompleks):</p>
+<pre><code>usia = 20
+if usia >= 18:
+    print("Dewasa")
+else:
+    print("Belum dewasa")</code><button class="copy-btn">Salin</button></pre>
+                <p>Ini bukan AI canggih, tetapi dasar pengambilan keputusan berbasis aturan, yang menjadi fondasi AI modern.</p>
+            </section>
+
+            <!-- BAB 20 -->
+            <section id="bab20" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">20</div>
+                    <h2>BAB 20 – PROYEK AKHIR PRAKTIK SMA–SMK</h2>
+                </div>
+                <h3>20.1 Bentuk Proyek</h3>
+                <ul>
+                    <li>Program manajemen data</li>
+                    <li>Aplikasi logika berbasis Python</li>
+                    <li>Simulasi AI sederhana</li>
+                    <li>Website statis atau dinamis sederhana</li>
+                </ul>
+
+                <h3>20.2 Kriteria Penilaian</h3>
+                <ol>
+                    <li>Ketepatan logika</li>
+                    <li>Struktur kode</li>
+                    <li>Dokumentasi</li>
+                    <li>Kesadaran etika</li>
+                </ol>
+            </section>
+
+            <!-- BAB 21 (NEW) -->
+            <section id="bab21" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">21</div>
+                    <h2>BAB 21 – DASAR-DASAR PEMBUATAN WEBSITE</h2>
+                </div>
+                <h3>21.1 Apa Itu Website (Tanpa Ilusi)</h3>
+                <p>Website adalah kumpulan halaman yang diakses melalui internet menggunakan browser. Website <strong>bukan sekadar tampilan</strong>, tetapi sistem yang menyajikan informasi secara terstruktur.</p>
+                <p>Kesalahan umum siswa adalah mengira website = desain. Ini keliru. Desain tanpa struktur adalah hiasan kosong.</p>
+
+                <h3>21.2 Cara Kerja Website</h3>
+                <p>Website bekerja melalui mekanisme <strong>client–server</strong>:</p>
+                <ul>
+                    <li>Client (browser) meminta data</li>
+                    <li>Server memproses permintaan</li>
+                    <li>Server mengirimkan respons</li>
+                </ul>
+                <p>Jika siswa tidak memahami alur ini, maka pembuatan website hanya akan menjadi aktivitas meniru template.</p>
+
+                <h3>21.3 Komponen Utama Website</h3>
+                <ol>
+                    <li><strong>HTML</strong> – struktur dan makna konten</li>
+                    <li><strong>CSS</strong> – tata letak dan tampilan</li>
+                    <li><strong>JavaScript</strong> – logika dan interaksi</li>
+                </ol>
+                <p>Ketiganya memiliki fungsi berbeda. Mencampur peran mereka adalah kesalahan konseptual.</p>
+            </section>
+
+            <!-- BAB 22 (NEW) -->
+            <section id="bab22" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">22</div>
+                    <h2>BAB 22 – HTML: STRUKTUR LOGIS WEBSITE</h2>
+                </div>
+                <h3>22.1 HTML sebagai Bahasa Struktur</h3>
+                <p>HTML bukan bahasa pemrograman, melainkan bahasa markup. Fungsinya memberi <strong>makna</strong> pada konten.</p>
+                <p>Contoh struktur dasar:</p>
+<pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Website Pertama&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Judul&lt;/h1&gt;
+    &lt;p&gt;Paragraf&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code><button class="copy-btn">Salin</button></pre>
+                <p>Setiap tag memiliki fungsi. Menggunakan tag tanpa memahami maknanya adalah kebiasaan buruk.</p>
+
+                <h3>22.2 Kesalahan Umum HTML</h3>
+                <ul>
+                    <li>Menggunakan div untuk semua hal</li>
+                    <li>Tidak memahami hierarki tag</li>
+                    <li>Mengabaikan semantik</li>
+                </ul>
+                <p>Kesalahan ini menunjukkan lemahnya pemahaman struktur.</p>
+            </section>
+
+            <!-- BAB 23 (NEW) -->
+            <section id="bab23" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">23</div>
+                    <h2>BAB 23 – CSS: TAMPILAN BERBASIS LOGIKA</h2>
+                </div>
+                <h3>23.1 Fungsi CSS</h3>
+                <p>CSS mengatur tampilan, bukan konten. CSS yang baik mengikuti logika struktur HTML.</p>
+                <p>Contoh sederhana:</p>
+<pre><code>h1 {
+  color: blue;
+}</code><button class="copy-btn">Salin</button></pre>
+
+                <h3>23.2 Konsep Penting CSS</h3>
+                <ul>
+                    <li>Selector</li>
+                    <li>Property dan value</li>
+                    <li>Box model</li>
+                </ul>
+                <p>Siswa sering menghafal CSS tanpa memahami efek logisnya.</p>
+            </section>
+
+            <!-- BAB 24 (NEW) -->
+            <section id="bab24" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">24</div>
+                    <h2>BAB 24 – JAVASCRIPT: LOGIKA DI SISI KLIEN</h2>
+                </div>
+                <h3>24.1 Peran JavaScript</h3>
+                <p>JavaScript membuat website interaktif. Di sinilah logika pemrograman benar-benar bekerja.</p>
+                <p>Contoh sederhana:</p>
+<pre><code>&lt;button onclick="alert('Halo')"&gt;Klik&lt;/button&gt;</code><button class="copy-btn">Salin</button></pre>
+
+                <h3>24.2 Hubungan JavaScript dan Koding</h3>
+                <p>JavaScript memaksa siswa menerapkan konsep variabel, kondisi, dan perulangan dalam konteks nyata.</p>
+            </section>
+
+            <!-- BAB 25 (NEW) -->
+            <section id="bab25" class="chapter-card">
+                <div class="chapter-header">
+                    <div class="chapter-number">25</div>
+                    <h2>BAB 25 – BERPIKIR KRITIS DALAM MEMBANGUN WEBSITE</h2>
+                </div>
+                <h3>25.1 Website Bukan Sekadar Bisa Jalan</h3>
+                <p>Website yang baik:</p>
+                <ul>
+                    <li>terstruktur</li>
+                    <li>mudah dipahami</li>
+                    <li>tidak membebani pengguna</li>
+                </ul>
+
+                <h3>25.2 Kesalahan Fatal Pemula</h3>
+                <ul>
+                    <li>Mengutamakan efek visual berlebihan</li>
+                    <li>Mengabaikan performa</li>
+                    <li>Menyalin kode tanpa memahami</li>
+                </ul>
+
+                <h3>25.3 Sikap Profesional</h3>
+                <p>Membangun website adalah aktivitas rasional. Jika siswa tidak bisa menjelaskan apa yang dibuatnya, maka proyek tersebut gagal secara pendidikan.</p>
+            </section>
+
+            <!-- PENUTUP -->
+            <section class="chapter-card" style="border-top: 5px solid var(--primary);">
+                <h2 style="text-align: center; margin-top:0;">Penutup</h2>
+                <p style="text-align: center;">Buku ini tidak dirancang untuk membuat siswa merasa pintar, tetapi untuk membuat mereka **benar-benar berpikir**. Koding, AI, dan website adalah alat. Logika dan integritas intelektual adalah inti. Tanpa itu, semua teknologi hanya akan melahirkan generasi pengguna, bukan pencipta.</p>
+            </section>
+
+            <!-- TENTANG PENULIS -->
+            <section class="chapter-card author-card">
+                <div class="author-avatar">RA</div>
+                <h3 style="margin-top: 0;">Tentang Penulis</h3>
+                <p style="text-align: center; margin-bottom: 0.5rem;"><strong>Reski Ardiansyah</strong></p>
+                <p style="text-align: center; margin-bottom: 1.5rem;">Pengembang materi kurikulum KKA dengan dedikasi untuk mencerdaskan kehidupan bangsa melalui teknologi.</p>
+                <p style="text-align: center; margin-bottom: 0;">
+                    <a href="https://instagram.com/ikky05__" target="_blank" class="social-link">
+                        <i style="font-style: normal; margin-right: 5px;">📷</i> @ikky05__
+                    </a>
+                </p>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <h4>Reski Ardiansyah</h4>
+            <p>Instagram: <a href="https://instagram.com/ikky05__" target="_blank">@ikky05__</a></p>
+            <p style="margin-top: 1rem;">&copy; 2023 Kurikulum KKA - Koding dan Kecerdasan Artifisial. Dibuat untuk Pendidikan Indonesia.</p>
+        </div>
+    </footer>
+
+    <!-- MOBILE MENU BUTTON -->
+    <button class="mobile-menu-btn" onclick="toggleSidebar()" aria-label="Toggle Menu">
+        ☰
+    </button>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Toggle Sidebar on Mobile
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        // Highlight Active Section in Sidebar on Scroll
+        const observerOptions = {
+            root: null,
+            rootMargin: '-100px 0px -60% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const links = document.querySelectorAll('.nav-link');
+                    
+                    links.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === '#' + id) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        }, observerOptions);
+
+        // Observe all chapters
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Copy Code Functionality
+        document.querySelectorAll('.copy-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const codeBlock = button.parentElement.querySelector('code');
+                const text = codeBlock.innerText;
+                
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalText = button.innerText;
+                    button.innerText = "Disalin!";
+                    button.style.background = "rgba(16, 185, 129, 0.8)"; // Green color
+                    
+                    setTimeout(() => {
+                        button.innerText = originalText;
+                        button.style.background = "";
+                    }, 2000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
